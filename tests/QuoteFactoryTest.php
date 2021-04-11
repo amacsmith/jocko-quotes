@@ -25,8 +25,6 @@ class QuoteFactoryTest extends TestCase
 
         $quote = $quotes->getQuoteByInteger(1);
 
-        var_dump($quote);
-
         $this->assertEquals("I'm honored that I had the privilege to go and fight for America. — Thom \"DRAGO\" Dzieran", $quote);
     }
 }

@@ -57,8 +57,6 @@ class QuoteFactory
 
         $quoteIndexString = "-{$quoteIndex}";
 
-        var_dump($quoteIndexString);
-
         $response = $this->client->get(self::QUOTE_API_ENDPOINT . $quoteIndexString);
 
         return json_decode($response->getBody()->getContents())[0]->q;
