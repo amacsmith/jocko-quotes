@@ -5,7 +5,7 @@ I created this because I really enjoy the content that Jocko Willink's shares an
 Get Jocko quotes from the jocko quote database for you php project.
 
 usage
-```
+```php
 use AMacSmith\JockoQuotes\QuoteFactory;
 
 $quotes = new QuoteFactory();
