@@ -26,7 +26,7 @@ class QuoteFactory
         $this->client = $client ?: new Client();
     }
 
-    public function getQuoteCount()
+    private function quoteCount()
     {
         $response = $this->client->get(self::QUOTE_COUNT_API_ENDPOINT);
 
@@ -37,9 +37,9 @@ class QuoteFactory
      * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getRandomQuote()
+    public function randomQuote()
     {
-        $quoteCount = $this->getQuoteCount();
+        $quoteCount = $this->quoteCount();
         $randomQuoteIndex = mt_rand(0, $quoteCount);
 
         $response = $this->client->get(self::QUOTE_API_ENDPOINT . "-$randomQuoteIndex");
@@ -47,9 +47,9 @@ class QuoteFactory
         return json_decode($response->getBody()->getContents())[0]->q;
     }
 
-    public function getQuoteByInteger(int $quoteIndex)
+    public function quoteByInteger(int $quoteIndex)
     {
-        $quoteCount = $this->getQuoteCount();
+        $quoteCount = $this->quoteCount();
 
         if($quoteIndex < 0 || $quoteIndex > $quoteCount) {
             throw new RuntimeException('The Quote Index passed is not within the valid Quote Index Range 0 to ' . $quoteCount);
@@ -58,6 +58,13 @@ class QuoteFactory
         $quoteIndexString = "-{$quoteIndex}";
 
         $response = $this->client->get(self::QUOTE_API_ENDPOINT . $quoteIndexString);
+
+        return json_decode($response->getBody()->getContents())[0]->q;
+    }
+
+    public function quoteOfTheDay()
+    {
+        $response = $this->client->get(self::QUOTE_API_ENDPOINT.'QOTD');
 
         return json_decode($response->getBody()->getContents())[0]->q;
     }
