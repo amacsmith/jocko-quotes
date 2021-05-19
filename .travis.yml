@@ -1,0 +1,20 @@
+language: php
+
+php:
+  - 8.0
+
+env:
+  matrix:
+    - COMPOSER_FLAGS="--prefer-lowest"
+    - COMPOSER_FLAGS=""
+
+before_install: phpenv config-add travisphpconfig.ini
+
+before_script:
+  - travis_retry composer update ${COMPOSER_FLAGS}
+
+script:
+  - vendor/bin/phpunit --coverage-clover coverage.xml
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
